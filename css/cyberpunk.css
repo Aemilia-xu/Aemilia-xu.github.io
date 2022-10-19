@@ -10818,12 +10818,12 @@ article.article .content {
 }
 article.article .content h1 {
   font-size: 2.5em;
-  border-bottom: 2px solid #4a4a4a;
+  border-bottom: 0.1px solid #696969;
   font-weight: bold;
 }
 article.article .content h2 {
   font-size: 2.25em;
-  border-bottom: 2px solid #4a4a4a;
+  border-bottom: 2px solid #696969;
   font-weight: bold;
 }
 article.article .content h3 {

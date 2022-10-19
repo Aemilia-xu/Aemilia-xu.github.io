@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>【论文笔记】Reconstructing Training Data with Informed Adversaries - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文提出了一种研究ML模型重构攻击的可行性的通用方法，而无需假设模型的类型或访问中间梯度，并启动了一项能够防止这类攻击的缓解策略的研究"><meta property="og:type" content="blog"><meta property="og:title" content="【论文笔记】Reconstructing Training Data with Informed Adversaries"><meta property="og:url" content="http://example.com/2022/10/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="本文提出了一种研究ML模型重构攻击的可行性的通用方法，而无需假设模型的类型或访问中间梯度，并启动了一项能够防止这类攻击的缓解策略的研究"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/cover.jpg"><meta property="article:published_time" content="2022-10-19T02:30:43.000Z"><meta property="article:modified_time" content="2022-10-19T03:08:15.834Z"><meta property="article:author" content="John Doe"><meta property="article:tag" content="数据重建"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/cover.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/10/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/"},"headline":"【论文笔记】Reconstructing Training Data with Informed Adversaries","image":["http://example.com/gallery/covers/cover.jpg"],"datePublished":"2022-10-19T02:30:43.000Z","dateModified":"2022-10-19T03:08:15.834Z","author":{"@type":"Person","name":"John Doe"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"本文提出了一种研究ML模型重构攻击的可行性的通用方法，而无需假设模型的类型或访问中间梯度，并启动了一项能够防止这类攻击的缓解策略的研究"}</script><link rel="canonical" href="http://example.com/2022/10/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/"><link rel="icon" href="/img/logo.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/cover.jpg" alt="【论文笔记】Reconstructing Training Data with Informed Adversaries"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-19T02:30:43.000Z" title="2022/10/19 上午10:30:43">2022-10-19</time>发表</span><span class="level-item"><time dateTime="2022-10-19T03:08:15.834Z" title="2022/10/19 上午11:08:15">2022-10-19</time>更新</span><span class="level-item">13 分钟读完 (大约1960个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">【论文笔记】Reconstructing Training Data with Informed Adversaries</h1><div class="content"><h3 id="摘要-amp-介绍"><a href="#摘要-amp-介绍" class="headerlink" title="摘要&amp;介绍"></a>摘要&amp;介绍</h3><p>由于机器学习模型可以有“记忆”功能，那么当训练数据涉及隐私信息时，若被攻击者还原出原始训练数据，就会很危险。这个论文就是探讨这样的攻击是否可能。</p>
+<p>所有的训练数据中，只有一个是未知的。目标就是还原出这一个未知的数据样本，找到攻击的方式、泄露多少信息可以达到被还原、哪些特性会导致可还原、自我检查模型的安全性（不泄露信息）</p>
+<p>本文提出了一种研究ML模型重构攻击的可行性的通用方法，而无需假设模型的类型或访问中间梯度，并启动了一项能够防止这类攻击的缓解策略的研究</p>
+<p>RecoNN一种用于重现数据而训练的神经网络</p>
+<span id="more"></span>
+<h3 id="II-Reconstruction-with-Informed-Adversaries"><a href="#II-Reconstruction-with-Informed-Adversaries" class="headerlink" title="II. Reconstruction with Informed Adversaries"></a>II. Reconstruction with Informed Adversaries</h3><p>该部分主要介绍了为什么定义了这样很强的infromed adversaries，即敌手知道除了target以外的所有数据。以及这样的reconstruction攻击和membership inference攻击、attribute inference攻击之间的关系。</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="III-Reconstruction-in-convex-setting"><a href="#III-Reconstruction-in-convex-setting" class="headerlink" title="III. Reconstruction in convex setting"></a>III. Reconstruction in convex setting</h3><h4 id="A-Reconstruction-Strategy-for-Convex-Models"><a href="#A-Reconstruction-Strategy-for-Convex-Models" class="headerlink" title="A. Reconstruction Strategy for Convex Models"></a>A. Reconstruction Strategy for Convex Models</h4><p>针对ERM（经验风险最小化问题）下凸监督学习模型的攻击，在没有side knowledge的时候，对线性回归、岭回归、Logistic回归都可以实现攻击。</p>
+<p>若风险函数为<img src="../../../0College/自学/论文笔记.assets/image-20221004221050574.png" alt="image-20221004221050574" style="zoom: 33%;" />，且<img src="../../../0College/自学/论文笔记.assets/image-20221004221335758.png" alt="image-20221004221335758" style="zoom: 33%;" />，则最优解为<img src="../../../0College/自学/论文笔记.assets/image-20221004221431636.png" alt="image-20221004221431636" style="zoom: 33%;" /></p>
+<p>敌手有访问模型的white box（说明知道模型的结构、参数信息），并且有其他所有样本D_的信息，那么target z就满足一个方程式<br><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221004221617016.png" alt="image-20221004221617016"></p>
+<p>监督学习中一个样本用(x,y)即<strong>d维</strong>的特征向量<strong>x</strong>和<strong>1维</strong>的标签y来表示，则要从d’个等式中解出d+1个未知数（p.s. d’是模型空间的维度）</p>
+<p>【解读】为什么是d’个等式？因为模型空间中，每个模型都有一个方程</p>
+<h4 id="B-Closed-Form-Reconstruction-Against-GLMs"><a href="#B-Closed-Form-Reconstruction-Against-GLMs" class="headerlink" title="B. Closed-Form Reconstruction Against GLMs"></a>B. Closed-Form Reconstruction Against GLMs</h4><blockquote>
+<p>证明在用截距项拟合的GLM（广义线性模型）的情况下，存在这种攻击的闭式解决方案。</p>
+</blockquote>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008164307767.png" alt="image-20221008164307767"></p>
+<p>这个攻击下，informed敌手不需要其他关于z的side knowledge</p>
+<h5 id="x3D-x3D-【证明】-x3D-x3D"><a href="#x3D-x3D-【证明】-x3D-x3D" class="headerlink" title="&#x3D;&#x3D;【证明】&#x3D;&#x3D;"></a>&#x3D;&#x3D;【证明】&#x3D;&#x3D;</h5><p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008171056387.png" alt="image-20221008171056387"></p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008171115709.png" alt="image-20221008171115709"></p>
+<h3 id="IV-A-General-Reconstruction-Attack"><a href="#IV-A-General-Reconstruction-Attack" class="headerlink" title="IV. A General Reconstruction Attack"></a>IV. A General Reconstruction Attack</h3><blockquote>
+<p>针对一般的机器学习(ML)模型的重建攻击</p>
+</blockquote>
+<p>直观上，z对模型<code>θ=A(D_ ∪&#123;z&#125;)</code>的影响和z对<code>θ^=A(D_ ∪&#123;z^&#125;)</code>的影响是一样的，所以可以通过反复尝试来找到z</p>
+<h4 id="A-General-Attack-Strategy"><a href="#A-General-Attack-Strategy" class="headerlink" title="A. General Attack Strategy"></a>A. General Attack Strategy</h4><p>记A<del>D_</del>&#x3D;A(D_ ∪{z})，那么当D_ 给定时，A就是Z→Θ的函数。那么reconstruction攻击就是要解出z&#x3D;A<del>D_</del>^-1^(θ)</p>
+<p>【注意】这里是一般的ML模型，所以不一定能够保证是convex的，而且模型训练过程中可能有随机性</p>
+<p>因为假设了敌手特别强大，所以可以采用枚举的方式，找到最接近θ的<br>论文中采用的机制是using “neural networks to attack neural networks”，（用魔法打败魔法hhhh），构建了RecoNN模型</p>
+<h4 id="B-Training-Reconstructor-Networks"><a href="#B-Training-Reconstructor-Networks" class="headerlink" title="B. Training Reconstructor Networks"></a>B. Training Reconstructor Networks</h4><p>本文中重构z的步骤如下</p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008212630303.png" alt="image-20221008212630303"></p>
+<p>D^—-^&#x3D;{z<del>1</del>^, z<del>2</del>^ ,…, z<del>k</del>^}是Z中的shadow targets，这属于关于z的side knowledge</p>
+<ol>
+<li>枚举D^—-^中的所有元素，得到θ^<del>i</del>，从而得到了attack training data攻击训练数据<img src="../../../0College/自学/论文笔记.assets/image-20221008212330485.png" alt="image-20221008212330485" style="zoom:33%;" /></li>
+<li>使用训练算法R得到RecoNN模型Φ</li>
+<li>应用Φ，得到结果z^</li>
+</ol>
+<p>此外，假设了X和Y都是有限的，且y可以从x中直接推断出，那么只要重构样本的特征向量x即可</p>
+<p>具体的训练方式见后面的讨论</p>
+<h4 id="using-“neural-networks-to-attack-neural-networks”的相关工作"><a href="#using-“neural-networks-to-attack-neural-networks”的相关工作" class="headerlink" title="using “neural networks to attack neural networks”的相关工作"></a>using “neural networks to attack neural networks”的相关工作</h4><p>被应用于了membership inference，model inversion模型反演，property inference</p>
+<h3 id="V-Experimental-Setup"><a href="#V-Experimental-Setup" class="headerlink" title="V. Experimental Setup"></a>V. Experimental Setup</h3><h4 id="A-Default-Settings"><a href="#A-Default-Settings" class="headerlink" title="A. Default Settings"></a>A. Default Settings</h4><p>实验中使用的模型的超参数</p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221009183642864.png" alt="image-20221009183642864"></p>
+<p>a. 数据集的分割：D_、D^和测试目标集是三个不相交的集合</p>
+<p>b. 生成模型的训练：训练方式采用的就是标准的梯度下降法，且使用了full batches。假设了敌手直到模型的初始状态，所有模型的初始状态都一致（之后也有讨论使用mini-batching和随机初始化情况下的攻击）</p>
+<p>MINST数据集上训练出来的模型准确率更加高（因为CIFAR-10更加复杂），所以对CIFAR-10的攻击可能更加困难，需要更加庞大的shadow points去训练RecoNN</p>
+<p>c. 重建模型的训练：When training the reconstructor, shadow model parameters across layers are flattened and concatenated together.？？？什么意思. 在训练的时候，跨层的参数被扁平化，且连接在一起。<strong>还需要把所有的坐标点都缩放到0均值和平均方差</strong>，因为有些参数很小。</p>
+<p>针对MINST，采用MAE（平均绝对误差）+MSE（均方误差）的方式来计算shadow targets和reconstructor outputs之间的loss。</p>
+<p>针对CIFAR-10，增加了LPIPS loss（感知损失）和GAN-like Discriminator loss，都是为了提高图像的视觉质量</p>
+<h4 id="B-Criteria-for-Attack-Success"><a href="#B-Criteria-for-Attack-Success" class="headerlink" title="B. Criteria for Attack Success"></a>B. Criteria for Attack Success</h4><p>介绍了实验中设置的评估指标</p>
+<p>a.  MSE：均方差</p>
+<p>b. LPIPS：感知损失，即比较深度特征，更加接近人类视觉</p>
+<p>c. KL散度：</p>
+<p>d. Nearest Neighbor Oracle: 一个oracle，可以猜测离z最接近的点z^</p>
+<h3 id="VI-Empirical-Studies-in-reconstruction"><a href="#VI-Empirical-Studies-in-reconstruction" class="headerlink" title="VI. Empirical Studies in reconstruction"></a>VI. Empirical Studies in reconstruction</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>采用的策略是针对已知的所有训练数据和shadow targets训练得到的所有模型θ<del>i</del>来训练RecoNN模型Φ，来得到θ对应的样本z，即using “neural networks to attack neural networks”</p>
+<h3 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h3><ul>
+<li><p>membership inference attacks (MIA)：成员推理攻击，即判断一个对象是否是模型训练时使用的数据<a target="_blank" rel="noopener" href="https://blog.csdn.net/xff1994/article/details/89964552">https://blog.csdn.net/xff1994/article/details/89964552</a></p>
+</li>
+<li><p>attribute inference attacks (AIA) ：推理攻击</p>
+</li>
+<li><p>property inference attacks (PIA)：属性推理攻击，AIA的一种泛化攻击，一般都是得到样本数据的一些属性、平均信息，不会损害个人隐私</p>
+</li>
+<li><p><strong>GLM</strong>广义线性模型：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22876460">https://zhuanlan.zhihu.com/p/22876460</a></p>
+<p><a target="_blank" rel="noopener" href="https://xg1990.com/blog/archives/304">https://xg1990.com/blog/archives/304</a></p>
+<p>例如线性回归中假设y|x服从正态分布，Logistic回归中假设y|x服从二项分布</p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008144438312.png" alt="image-20221008144438312"></p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008161102802.png" alt="image-20221008161102802"></p>
+<img src="../../../0College/自学/论文笔记.assets/image-20221008160749742.png" alt="image-20221008160749742" style="zoom: 33%;" />
+</li>
+<li><p>canonical exponential family 指数分布族</p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008154013308.png" alt="image-20221008154013308"></p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008155357344.png" alt="image-20221008155357344"></p>
+<p>而在GLM中，假设y|x满足这种指数分布族是因为这样下的y|x的期望、方差都非常简单，而要求的目标函数h(x;θ)就是y|x的期望，这样就很简单了。</p>
+<p><img src="/../../../0College/%E8%87%AA%E5%AD%A6/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0.assets/image-20221008161432064.png" alt="image-20221008161432064"></p>
+</li>
+<li><p>canonical link function 正则关联函数，是canonical response function（正则响应函数）的倒数</p>
+</li>
+<li><p>LPIPS loss（感知损失）：用深度特征来度量图像的相似度</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/206470186">https://zhuanlan.zhihu.com/p/206470186</a></p>
+</li>
+<li><p>GAN-like Discriminator loss   GAN网络（生成对抗网络是要通过对抗训练的方式来使得生成网络产生的样本服从真实数据分布）</p>
+</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ol>
+<li><p>没明白”When training the reconstructor, shadow model parameters across layers are flattened and concatenated together.“</p>
+<p>扁平化就是说降低维度吧。</p>
+</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>【论文笔记】Reconstructing Training Data with Informed Adversaries</p><p><a href="http://example.com/2022/10/19/论文笔记1/">http://example.com/2022/10/19/论文笔记1/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>John Doe</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-19</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-19</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%8D%E5%BB%BA/">数据重建</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/10/18/hello-world/"><span class="level-item">Hello World</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><div class="column column-left is-4-tablet is-3-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Aemilia Xu"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Aemilia Xu</p><p class="is-size-6 is-block">a senior student</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shanghai</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">1</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/Aemilia-xu" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/Aemilia-xu"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://facebook.com"><i class="fab fa-facebook"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><!--!--><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-19T02:30:43.000Z">2022-10-19</time></p><p class="title"><a href="/2022/10/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B01/">【论文笔记】Reconstructing Training Data with Informed Adversaries</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-10-18T12:02:03.267Z">2022-10-18</time></p><p class="title"><a href="/2022/10/18/hello-world/">Hello World</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">十月 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%8D%E5%BB%BA/"><span class="tag">数据重建</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">订阅更新</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="订阅"></div></div></form></div></div></div><div class="card widget"><div class="card-content"><div class="notification is-danger">You need to set <code>client_id</code> and <code>slot_id</code> to show this AD unit. Please set it in <code>_config.yml</code>.</div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">follow.it</h3><form action="" method="post" target="_blank"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="订阅"></div></div></form></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2022 John Doe</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

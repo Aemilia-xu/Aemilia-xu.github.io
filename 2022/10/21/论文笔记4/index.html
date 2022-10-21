@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>【论文笔记】Data-Free Model Extraction（CVPR 2021） - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="（还不是很完善orz） 本文证明并解决了现有model extraction对数据集的依赖（依赖于替代数据集与实际训练集的相似性），并且在目标模型以black box形式被访问的条件下，提出了data-free的model extraction攻击，称为data-free model extraction (DFME)。DFME中还采用data-free knowledge transfer中的一"><meta property="og:type" content="blog"><meta property="og:title" content="【论文笔记】Data-Free Model Extraction（CVPR 2021）"><meta property="og:url" content="http://example.com/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="（还不是很完善orz） 本文证明并解决了现有model extraction对数据集的依赖（依赖于替代数据集与实际训练集的相似性），并且在目标模型以black box形式被访问的条件下，提出了data-free的model extraction攻击，称为data-free model extraction (DFME)。DFME中还采用data-free knowledge transfer中的一"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/cover6.jpg"><meta property="article:published_time" content="2022-10-21T02:30:43.000Z"><meta property="article:modified_time" content="2022-10-21T11:35:20.911Z"><meta property="article:author" content="Aemilia Xu"><meta property="article:tag" content="Model Extraction"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/cover6.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/"},"headline":"【论文笔记】Data-Free Model Extraction（CVPR 2021）","image":["http://example.com/gallery/covers/cover6.jpg"],"datePublished":"2022-10-21T02:30:43.000Z","dateModified":"2022-10-21T11:35:20.911Z","author":{"@type":"Person","name":"Aemilia Xu"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"（还不是很完善orz） 本文证明并解决了现有model extraction对数据集的依赖（依赖于替代数据集与实际训练集的相似性），并且在目标模型以black box形式被访问的条件下，提出了data-free的model extraction攻击，称为data-free model extraction (DFME)。DFME中还采用data-free knowledge transfer中的一"}</script><link rel="canonical" href="http://example.com/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/"><link rel="icon" href="/img/logo.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/cover6.jpg" alt="【论文笔记】Data-Free Model Extraction（CVPR 2021）"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-21T02:30:43.000Z" title="2022/10/21 上午10:30:43">2022-10-21</time>发表</span><span class="level-item"><time dateTime="2022-10-21T11:35:20.911Z" title="2022/10/21 下午7:35:20">2022-10-21</time>更新</span><span class="level-item">12 分钟读完 (大约1787个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">【论文笔记】Data-Free Model Extraction（CVPR 2021）</h1><div class="content"><p>（还不是很完善orz）</p>
+<p>本文证明并解决了现有model extraction对数据集的依赖（依赖于替代数据集与实际训练集的相似性），并且在目标模型以black box形式被访问的条件下，提出了data-free的model extraction攻击，称为data-free model extraction (<strong>DFME</strong>)。DFME中还采用data-free knowledge transfer中的一些技术。</p>
+<ul>
+<li>利用GAN网络来训练攻击模型</li>
+<li>使用$l_1$范式损失函数（防止梯度消失）</li>
+<li>使用零阶优化（前向差分法）来逼近梯度</li>
+</ul>
+<span id="more"></span>
+<h2 id="1-相关工作"><a href="#1-相关工作" class="headerlink" title="1 相关工作"></a>1 相关工作</h2><h3 id="1-1-Data-Free-Knowledge-Distillation（无数据知识蒸馏）"><a href="#1-1-Data-Free-Knowledge-Distillation（无数据知识蒸馏）" class="headerlink" title="1.1 Data-Free Knowledge Distillation（无数据知识蒸馏）"></a>1.1 Data-Free Knowledge Distillation（无数据知识蒸馏）</h3><p>可参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/516930757、https://zhuanlan.zhihu.com/p/102038521（知识蒸馏）">https://zhuanlan.zhihu.com/p/516930757、https://zhuanlan.zhihu.com/p/102038521（知识蒸馏）</a></p>
+<p>知识蒸馏是一种模型压缩方法，是一种基于“teacher-student网络思想”的训练方法，目标是把一个训练好的模型（teacher，Net-T）的知识压缩给另外一个模型（student，Net-S），达到节省模型训练的开销的作用。其中，Net-T一般结构复杂、参数量大，而Net-S结构较为简单、参数量小。那么在用Net-T来训练Net-S的时候，就是让Net-S去学习Net-T的泛化能力，直接的办法是使用softmax层输出的类别的概率来作为“soft target”。</p>
+<blockquote>
+<p>soft target相对应的是hard target。一般的标签都是hard target，就是说一个对象只有一个标签。而soft target则是在每个标签上都有一定的值。举例来说，一个写的像3的2，在”3”上具有一定的概率值。而写的像7的2，在”7”上有一定的概率值，那么他们就提供了更多的信息。</p>
+<p>【参考】<a target="_blank" rel="noopener" href="https://antkillerfarm.github.io/dl%20acceleration/2019/07/27/DL_acceleration_6.html">https://antkillerfarm.github.io/dl%20acceleration/2019/07/27/DL_acceleration_6.html</a></p>
+</blockquote>
+<p>使用soft target来训练Net-S时，softmax函数就变成了如下的形式</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020150304002.png" style="zoom: 30%;"></p>
+<p>（具体先不展开，看看之后需要用到哪些KD相关的知识再说）</p>
+<h3 id="1-2-Generative-Models"><a href="#1-2-Generative-Models" class="headerlink" title="1.2 Generative Models"></a>1.2 Generative Models</h3><p>本文中使用GAN类似的方法去训练student，用GAN去拟合最能说明当前student和teacher的决策曲面之间差异的数据分布（好复杂。。。）</p>
+<h3 id="1-3-Black-box-Gradient-Approximation"><a href="#1-3-Black-box-Gradient-Approximation" class="headerlink" title="1.3 Black-box Gradient Approximation"></a>1.3 Black-box Gradient Approximation</h3><p>因为目标模型是个black box，无法获得其梯度，所以采用的是零阶优化的方式来做到梯度逼近（之后会再介绍）</p>
+<h2 id="2-How-Hard-is-it-to-Find-a-Surrogate-Dataset"><a href="#2-How-Hard-is-it-to-Find-a-Surrogate-Dataset" class="headerlink" title="2 How Hard is it to Find a Surrogate Dataset?"></a>2 How Hard is it to Find a Surrogate Dataset?</h2><p>实验证明了现有model extraction都是基于替代数据集（surrogate dataset）非常接近与原始训练集的，若是替代集和原始训练集差别比较大，攻击的准确率就会低。</p>
+<p>但是这样的surrogate dataset在现实中难以获得，于是作者提出了DFME</p>
+<h2 id="3-Data-Free-Model-Extraction"><a href="#3-Data-Free-Model-Extraction" class="headerlink" title="3 Data-Free Model Extraction"></a>3 Data-Free Model Extraction</h2><blockquote>
+<p>介绍了本文提出的攻击方法</p>
+</blockquote>
+<p>DFME的目标是使extraction model对x的预测和目标模型对x的预测不同的概率最小。其中$D_V$是目标模型的训练集（攻击者不可知），所以可以用合成的数据集$D_S$</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020185833485.png" style="zoom:50%;"></p>
+<p>训练extraction model时，优化时使用的损失函数是$L$，则要满足</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020190239478.png" style="zoom:50%;"></p>
+<h3 id="3-1-Overview"><a href="#3-1-Overview" class="headerlink" title="3.1 Overview"></a>3.1 Overview</h3><p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020195504753.png" style="zoom:50%;"></p>
+<p>GFME的过程就是一个GAN网络，generator $G$生成输入$x$，目标网络$V$和Student网络$S$作为discriminator，$S$要去学习$V$对输入$x$的预测行为。其中$z$是一个随机的噪音，$G$通过给到的$z$来生成输入$x$。然后通过反向传播来优化。但是目标模型$V$是black-box，所以只能采取梯度逼近的方法。$G$和$S$一起组成了攻击模型。</p>
+<ul>
+<li><p>关于Student model $S$的结构的选择</p>
+<p>只需要知道目标模型所解决的问题的一般知识，选择适合的模型结构即可（根据知识蒸馏工作发现的结果）</p>
+</li>
+<li><p>关于损失函数的选择：</p>
+<p>这里使用了<strong>$l_1$范数损失函数</strong>，$G$使用的损失函数与$S$的一致，但是要增大梯度（即增大$V$和$S$之间的差距）</p>
+</li>
+<li><p>关于目标模型$V$的梯度计算：</p>
+<p>$V$是个黑盒，所以采用<strong>梯度逼近</strong>的方法来计算其梯度。但是$S$的训练不依赖$V$的参数$θ_V$，但是$G$的训练需要。</p>
+</li>
+</ul>
+<p>具体的算法如下所示。在每个epoch中，$G$和$S$分别训练$n_G$和$n_S$次，$n_G$和$n_S$的大小关系是个tradeoff</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020204131154.png" style="zoom:55%;"></p>
+<h3 id="3-2-Loss-Function"><a href="#3-2-Loss-Function" class="headerlink" title="3.2 Loss Function"></a>3.2 Loss Function</h3><blockquote>
+<p>选择的损失函数都是知识蒸馏问题中常用的</p>
+</blockquote>
+<p>【注】$K$是类的数量</p>
+<ol>
+<li><p>KL散度（相对熵）：即用概率分布 𝑞 来近似 𝑝 时所造成的信息损失量</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020205138562.png" style="zoom:50%;"></p>
+<p>但是当$S$越来越接近$V$时，KL散度就有梯度消失的问题了，导致训练$G$时，难以收敛</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020205243864.png" style="zoom:40%;"></p>
+</li>
+<li><p>$l_1$范数损失函数（比KL散度简单），其中$v_i$和$s_i$都是softmax激活前的logits（即$w^Tx$）。但是$V$的参数不可知，所以需要logits（证明见附录）</p>
+<p>【问题】这里计算$l_1$范数损失需要用到$V$的梯度吗</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020205329972.png" style="zoom:40%;"></p>
+</li>
+</ol>
+<h3 id="【问题】-3-3-Gradient-Approximation（梯度逼近）"><a href="#【问题】-3-3-Gradient-Approximation（梯度逼近）" class="headerlink" title="【问题】 3.3 Gradient Approximation（梯度逼近）"></a>【问题】 3.3 Gradient Approximation（梯度逼近）</h3><p>用零阶优化的方法。优化$G$时，通过逼近图像$x$的梯度，再使用反向传播算法来优化$G$，这样逼近的梯度的维度就很小？？？？<u><strong>没明白</strong></u></p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020211905637.png" style="zoom: 33%;"></p>
+<p>并使用前向差分法（forward differences method）来逼近梯度（即微分）</p>
+<p>其中$u_i$是随机的方向向量，共$m$个</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221020212246238.png" style="zoom: 33%;"></p>
+<p>有限差分法也可以选用</p>
+<p>【问题】零阶优化是一定要用到前向差分法吗，还是说梯度逼近需要用到前向差分</p>
+<h3 id="3-4-从概率分布中还原logits"><a href="#3-4-从概率分布中还原logits" class="headerlink" title="3.4 从概率分布中还原logits"></a>3.4 从概率分布中还原logits</h3><p>首先，计算</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221021192311548.png" style="zoom:50%;"></p>
+<p>接着计算</p>
+<p><img src="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/image-20221021192341986.png" alt="image-20221021192341986" style="zoom:50%;"></p>
+<h2 id="4-Experimental-Validation"><a href="#4-Experimental-Validation" class="headerlink" title="4 Experimental Validation"></a>4 Experimental Validation</h2><h2 id="5-Ablation-Studies"><a href="#5-Ablation-Studies" class="headerlink" title="5  Ablation Studies"></a>5  Ablation Studies</h2><ol>
+<li><p>损失函数的选择</p>
+<p>$l_1$范数损失函数要比KL散度损失函数好。KL散度损失函数收敛速度慢，而且会提前停止，存在梯度消失的问题</p>
+</li>
+<li><p>梯度逼近</p>
+<p>在逼近梯度的过程中，方向向量$u_i$的问询次数$m$和梯度的准确度之间成正比关系，但是$m$越大，训练时候的开销就越大，所以这也是个tradeoff问题。在训练过程中，训练$S$使用的问询次数的占比为$\frac{n_S}{n_S+(m+1)n_G}$</p>
+<p>作者提出了一种混合模式：先从一个surrogate dataset中提取出一个可能较差的student model，然后再用DFME中的算法，通过对目标模型的问询，来优化提取出的student model</p>
+</li>
+<li><p>logits的准确率的影响</p>
+<p>当logits的均方差MAE比较小的时候，就可以从分布中还原出来</p>
+</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>【论文笔记】Data-Free Model Extraction（CVPR 2021）</p><p><a href="http://example.com/2022/10/21/论文笔记4/">http://example.com/2022/10/21/论文笔记4/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Aemilia Xu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-21</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Model-Extraction/">Model Extraction</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/10/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B03/"><span class="level-item">【论文笔记】Membership Inference Attacks Against Machine Learning Models (ICMP 2017)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#1-相关工作"><span class="level-left"><span class="level-item">1 相关工作</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#1-1-Data-Free-Knowledge-Distillation（无数据知识蒸馏）"><span class="level-left"><span class="level-item">1.1 Data-Free Knowledge Distillation（无数据知识蒸馏）</span></span></a></li><li><a class="level is-mobile" href="#1-2-Generative-Models"><span class="level-left"><span class="level-item">1.2 Generative Models</span></span></a></li><li><a class="level is-mobile" href="#1-3-Black-box-Gradient-Approximation"><span class="level-left"><span class="level-item">1.3 Black-box Gradient Approximation</span></span></a></li></ul></li><li><a class="level is-mobile" href="#2-How-Hard-is-it-to-Find-a-Surrogate-Dataset"><span class="level-left"><span class="level-item">2 How Hard is it to Find a Surrogate Dataset?</span></span></a></li><li><a class="level is-mobile" href="#3-Data-Free-Model-Extraction"><span class="level-left"><span class="level-item">3 Data-Free Model Extraction</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#3-1-Overview"><span class="level-left"><span class="level-item">3.1 Overview</span></span></a></li><li><a class="level is-mobile" href="#3-2-Loss-Function"><span class="level-left"><span class="level-item">3.2 Loss Function</span></span></a></li><li><a class="level is-mobile" href="#【问题】-3-3-Gradient-Approximation（梯度逼近）"><span class="level-left"><span class="level-item">【问题】 3.3 Gradient Approximation（梯度逼近）</span></span></a></li><li><a class="level is-mobile" href="#3-4-从概率分布中还原logits"><span class="level-left"><span class="level-item">3.4 从概率分布中还原logits</span></span></a></li></ul></li><li><a class="level is-mobile" href="#4-Experimental-Validation"><span class="level-left"><span class="level-item">4 Experimental Validation</span></span></a></li><li><a class="level is-mobile" href="#5-Ablation-Studies"><span class="level-left"><span class="level-item">5  Ablation Studies</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2022 Aemilia Xu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

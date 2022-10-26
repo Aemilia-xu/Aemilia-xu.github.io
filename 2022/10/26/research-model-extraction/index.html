@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>research model extraction - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="论文 发表期刊&amp;amp;时间 被引 连接 阅读情况     Stealing machine learning  models via prediction {APIs} USENIX 2016 1340 https:&amp;#x2F;&amp;#x2F;www.usenix.org&amp;#x2F;conference&amp;#x2F;usenixsecurity16&amp;#x2F;technical-sessions&amp;#x2F;presentation&amp;#x2F;tramer"><meta property="og:type" content="blog"><meta property="og:title" content="research model extraction"><meta property="og:url" content="http://example.com/2022/10/26/research-model-extraction/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="论文 发表期刊&amp;amp;时间 被引 连接 阅读情况     Stealing machine learning  models via prediction {APIs} USENIX 2016 1340 https:&amp;#x2F;&amp;#x2F;www.usenix.org&amp;#x2F;conference&amp;#x2F;usenixsecurity16&amp;#x2F;technical-sessions&amp;#x2F;presentation&amp;#x2F;tramer"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/cover3.jpg"><meta property="article:published_time" content="2022-10-26T03:59:58.000Z"><meta property="article:modified_time" content="2022-10-26T12:22:29.675Z"><meta property="article:author" content="Aemilia Xu"><meta property="article:tag" content="model extraction"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/cover3.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/10/26/research-model-extraction/"},"headline":"research model extraction","image":["http://example.com/gallery/covers/cover3.jpg"],"datePublished":"2022-10-26T03:59:58.000Z","dateModified":"2022-10-26T12:22:29.675Z","author":{"@type":"Person","name":"Aemilia Xu"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"论文 发表期刊&amp;时间 被引 连接 阅读情况     Stealing machine learning  models via prediction {APIs} USENIX 2016 1340 https:&#x2F;&#x2F;www.usenix.org&#x2F;conference&#x2F;usenixsecurity16&#x2F;technical-sessions&#x2F;presentation&#x2F;tramer"}</script><link rel="canonical" href="http://example.com/2022/10/26/research-model-extraction/"><link rel="icon" href="/img/logo.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/cover3.jpg" alt="research model extraction"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-10-26T03:59:58.000Z" title="2022/10/26 上午11:59:58">2022-10-26</time>发表</span><span class="level-item"><time dateTime="2022-10-26T12:22:29.675Z" title="2022/10/26 下午8:22:29">2022-10-26</time>更新</span><span class="level-item">1 分钟读完 (大约156个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">research model extraction</h1><div class="content"><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>论文</th>
+<th>发表期刊&amp;时间</th>
+<th>被引</th>
+<th>连接</th>
+<th>阅读情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stealing machine learning  models via prediction {APIs}</td>
+<td>USENIX 2016</td>
+<td>1340</td>
+<td><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/tramer">https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/tramer</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Stealing hyperparameters in machine learning</td>
+<td>IEEE  2018</td>
+<td>405</td>
+<td><a target="_blank" rel="noopener" href="https://ui.adsabs.harvard.edu/abs/2018arXiv180205351W/abstract">https://ui.adsabs.harvard.edu/abs/2018arXiv180205351W/abstract</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Towards reverse-engineering black-box neural networks</td>
+<td></td>
+<td>279</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1711.01768">https://arxiv.org/abs/1711.01768</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Stealing functionality of  black-box models</td>
+<td>CVPR 2019</td>
+<td>268</td>
+<td><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_CVPR_2019/html/Orekondy_Knockoff_Nets_Stealing_Functionality_of_Black-Box_Models_CVPR_2019_paper.html">https://openaccess.thecvf.com/content_CVPR_2019/html/Orekondy_Knockoff_Nets_Stealing_Functionality_of_Black-Box_Models_CVPR_2019_paper.html</a></td>
+<td></td>
+</tr>
+<tr>
+<td>PRADA: protecting against DNN model stealing attacks</td>
+<td>IEEE  2019</td>
+<td>255</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.02628">https://arxiv.org/abs/1805.02628</a></td>
+<td></td>
+</tr>
+<tr>
+<td>High accuracy and high  fidelity extraction of neural networks,</td>
+<td>USENIX 2020</td>
+<td>169</td>
+<td><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity20/presentation/jagielski">https://www.usenix.org/conference/usenixsecurity20/presentation/jagielski</a></td>
+<td></td>
+</tr>
+<tr>
+<td>Cache Telepathy: Leveraging Shared Resource Attacks to Learn DNN  Architectures</td>
+<td>USENIX  2020</td>
+<td>159</td>
+<td><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity20/presentation/yan">https://www.usenix.org/conference/usenixsecurity20/presentation/yan</a></td>
+<td></td>
+</tr>
+<tr>
+<td>CSI NN: Reverse Engineering of Neural Network Architectures  Through Electromagnetic Side Channel</td>
+<td>USENIX 2019</td>
+<td>142</td>
+<td><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity19/presentation/batina">https://www.usenix.org/conference/usenixsecurity19/presentation/batina</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><div class="article-licensing box"><div class="licensing-title"><p>research model extraction</p><p><a href="http://example.com/2022/10/26/research-model-extraction/">http://example.com/2022/10/26/research-model-extraction/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Aemilia Xu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-10-26</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-26</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/model-extraction/">model extraction</a></div><div class="notification is-danger">You need to set <code>install_url</code> to use ShareThis. Please set it in <code>_config.yml</code>.</div></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" href="/" target="_blank" rel="noopener" data-type="afdian"><span class="icon is-small"><i class="fas fa-charging-station"></i></span><span>爱发电</span></a><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><div class="notification is-danger">You forgot to set the <code>business</code> or <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.</div><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B04/"><span class="level-item">【论文笔记】Data-Free Model Extraction（CVPR 2021）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="notification is-danger">You forgot to set the <code>shortname</code> for Disqus. Please set it in <code>_config.yml</code>.</div></div></div></div><!--!--><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3 is-sticky"><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2022 Aemilia Xu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

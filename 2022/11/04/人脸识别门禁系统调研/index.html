@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>人脸识别门禁系统调研 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="主要参考了四川大学一位博士的一篇毕业论文《高精度三维人脸识别技术及其门禁应用研究》中绪论及参考文献部分https:&amp;#x2F;&amp;#x2F;kns.cnki.net&amp;#x2F;kcms&amp;#x2F;detail&amp;#x2F;detail.aspx?dbcode&amp;#x3D;CDFD&amp;amp;dbname&amp;#x3D;CDFDLAST2022&amp;amp;filename&amp;#x3D;1021831289.nh&amp;amp;uniplatform&amp;#x3D;NZKPT&amp;amp;v&amp;#x3D;_CBMr2TIM4vE"><meta property="og:type" content="blog"><meta property="og:title" content="人脸识别门禁系统调研"><meta property="og:url" content="http://example.com/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="主要参考了四川大学一位博士的一篇毕业论文《高精度三维人脸识别技术及其门禁应用研究》中绪论及参考文献部分https:&amp;#x2F;&amp;#x2F;kns.cnki.net&amp;#x2F;kcms&amp;#x2F;detail&amp;#x2F;detail.aspx?dbcode&amp;#x3D;CDFD&amp;amp;dbname&amp;#x3D;CDFDLAST2022&amp;amp;filename&amp;#x3D;1021831289.nh&amp;amp;uniplatform&amp;#x3D;NZKPT&amp;amp;v&amp;#x3D;_CBMr2TIM4vE"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/cover5.jpg"><meta property="article:published_time" content="2022-11-04T06:52:50.000Z"><meta property="article:modified_time" content="2022-11-06T12:54:17.964Z"><meta property="article:author" content="Aemilia Xu"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/cover5.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/"},"headline":"人脸识别门禁系统调研","image":["http://example.com/gallery/covers/cover5.jpg"],"datePublished":"2022-11-04T06:52:50.000Z","dateModified":"2022-11-06T12:54:17.964Z","author":{"@type":"Person","name":"Aemilia Xu"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"主要参考了四川大学一位博士的一篇毕业论文《高精度三维人脸识别技术及其门禁应用研究》中绪论及参考文献部分https:&#x2F;&#x2F;kns.cnki.net&#x2F;kcms&#x2F;detail&#x2F;detail.aspx?dbcode&#x3D;CDFD&amp;dbname&#x3D;CDFDLAST2022&amp;filename&#x3D;1021831289.nh&amp;uniplatform&#x3D;NZKPT&amp;v&#x3D;_CBMr2TIM4vE"}</script><link rel="canonical" href="http://example.com/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/"><link rel="icon" href="/img/logo.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/cover5.jpg" alt="人脸识别门禁系统调研"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-11-04T06:52:50.000Z" title="2022/11/4 下午2:52:50">2022-11-04</time>发表</span><span class="level-item"><time dateTime="2022-11-06T12:54:17.964Z" title="2022/11/6 下午8:54:17">2022-11-06</time>更新</span><span class="level-item">18 分钟读完 (大约2652个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">人脸识别门禁系统调研</h1><div class="content"><blockquote>
+<p>主要参考了四川大学一位博士的一篇毕业论文《高精度三维人脸识别技术及其门禁应用研究》中绪论及参考文献部分<a target="_blank" rel="noopener" href="https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CDFD&amp;dbname=CDFDLAST2022&amp;filename=1021831289.nh&amp;uniplatform=NZKPT&amp;v=_CBMr2TIM4vECiK5CMJl0-VVf_M43nxrDEHrIj8VNBPFDF1AhJp9GCKcFnJK-09P">https://kns.cnki.net/kcms/detail/detail.aspx?dbcode=CDFD&amp;dbname=CDFDLAST2022&amp;filename=1021831289.nh&amp;uniplatform=NZKPT&amp;v=_CBMr2TIM4vECiK5CMJl0-VVf_M43nxrDEHrIj8VNBPFDF1AhJp9GCKcFnJK-09P</a></p>
+</blockquote>
+<span id="more"></span>
+<h3 id="二维人脸识别"><a href="#二维人脸识别" class="headerlink" title="二维人脸识别"></a>二维人脸识别</h3><p>【原理】对人脸的纹理数据进行特征表达，通过判断特征间的相似度来对人脸进行身份确认</p>
+<p>【缺点】易受人脸姿态、妆容、环境光照等的影响，应用受限制</p>
+<h3 id="三维人脸识别门禁"><a href="#三维人脸识别门禁" class="headerlink" title="三维人脸识别门禁"></a>三维人脸识别门禁</h3><h4 id="【优点】"><a href="#【优点】" class="headerlink" title="【优点】"></a>【优点】</h4><p>抗环境因素、人脸姿态因素、人脸化妆因素等</p>
+<h4 id="【原理】"><a href="#【原理】" class="headerlink" title="【原理】"></a>【原理】</h4><p>需要有数据采集、人脸识别、人脸防伪过程。</p>
+<p>人脸识别技术通过数据采集前端抓取通行人员的图像信息，利用人脸检测算法获取人脸区域，并使用人脸识别算法模型对人脸区域图像进行特征表达，最后通过特征之间的相似度比较完成对通行人员的身份鉴定。人脸防伪使用人脸防伪模型对通行人员人脸数据是否为真人进行分类，进而完成对通行目标的是否为真人的判断。</p>
+<h5 id="基于深度学习的人脸识别"><a href="#基于深度学习的人脸识别" class="headerlink" title="基于深度学习的人脸识别"></a><u>基于深度学习的人脸识别</u></h5><p>通常的方法是对人像图像进行特征表达，在模型定义好的特征空间中根据特征间的距离计算出特征间的相似度，进而确定样本的人物身份。基于深度学习的人脸识别一般利用有监督的学习方法使用CNN对算法进行建模。使用迁移学习，使模型能够适应新的数据分布。</p>
+<p>深度学习的人脸识别算法有：DeepID (香港中文大学)、DeepFace (Facebook)、FaceNet (Google)、VGGFace（牛津大学）</p>
+<ol>
+<li><p>DeepFace：</p>
+<p>使用了<strong>三维</strong>模型来进行<strong>人脸对齐</strong>，然后使用<strong>深度卷积神经网络</strong>对人脸对齐后的人脸图像各个Patch进行分类学习，并使用经典的<strong>交叉熵损失函数</strong>对模型进行优化监督。</p>
+</li>
+<li><p>DeepID系列</p>
+<ol>
+<li>DeepID：使用<strong>卷积神经网络</strong>对人脸进行表示，提取出其特征，使用<strong>softmax损失函数</strong>。其算法优化的主要手段就是增大数据集（对齐图片的预处理（增大数据集），再基于<strong>弱对齐</strong>图像从10个区域、3种尺度、RGB和灰色2种通道方面截取出<strong>60个面部块</strong>，分别输入单独的ConvNet，将从中提取特征。）检测的关键点是使用Sun等人提出的面部点检测方法检测5个面部标志点，包括两个眼睛中心，鼻尖和两个嘴角。</li>
+<li>DeepID2：依然使用<strong>卷积神经网络</strong>对人脸进行表示，在损失函数上添加了验证信号（人脸识别信号和人脸验证信号），两个信号使用加权的方式进行了组合。。根据全局对齐的人脸和人脸标志点的位置，裁剪了<strong>400个patch</strong>，用200个ConvNet提取出400个特征。</li>
+<li>DeepID2+</li>
+<li>DeepID3：提出了2种深度神经网络框架（一个基于VGG，一个基于GoogLeNet，含有Inception层），监督信号作用于中间层和最后层。</li>
+</ol>
+</li>
+<li><p>FaceNet：</p>
+<p><u>并没有2维和3维之间的对齐</u>。使用<strong>GoogLeNet V1模型</strong>，冰使用<strong>三元组损失函数</strong>代替之前的交叉熵损尖函数，在一个超几何球空间上完成优化任务，使得类内距离更紧凑，类间距离更远。</p>
+</li>
+</ol>
+<p>这三种算法的详细介绍见后</p>
+<ol>
+<li><p>VGGFace：人脸分类器使用<strong>VGGNet+Softmax loss</strong>，输出2622个类别概率，这是<strong>预训练</strong>过程。三元组学习人脸嵌入使用<strong>VGGNet+Triplet loss</strong>，输出1024维的人脸表示。在人脸分类器基础上，用目标数据集用fine-tuning方法学习了映射层。人脸验证则是通过比较两个人脸嵌入的欧式距离来验证同种人。</p>
+</li>
+<li><p>Center-Loss人脸识别 很好的特征收敛性能<br>46 立体视觉法</p>
+</li>
+</ol>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/2022-11-04T22_21_15-16676192654413.png" alt="2022-11-04T22_21_15"></p>
+<h5 id="人脸防伪"><a href="#人脸防伪" class="headerlink" title="人脸防伪"></a>人脸防伪</h5><p>除了要鉴定人脸对应的人物身份，还要人脸防伪，即鉴别是否是真实人脸（尤其要抵抗现在3D打印的、仿真度极高的三维面具）</p>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/2022-11-04T22_19_44-16676192861106.png" alt="2022-11-04T22_19_44"></p>
+<p>在基于深度学习的人脸识别中，有CNN结合LSTM的方式使用多帧数据输入模拟LBP-TOP的方法。</p>
+<h5 id="三维人像的数据采集"><a href="#三维人像的数据采集" class="headerlink" title="三维人像的数据采集"></a>三维人像的数据采集</h5><p>使用三维人脸照相机采集人脸数据，有直接的<strong>三维深度传感器</strong>，还可以使用<strong>三维重建算法</strong>对二维图像进行三维重建。三维人脸重建技术分为被动和主动2种</p>
+<p>三维重建算法有基于纹理信息的、基于纹理阴影信息的、基于统计模型的、<strong>立体视觉法</strong>（研究最多、应用最广泛）</p>
+<p>近年来，<strong>基于结构光的三维测量技术</strong>也已经广泛应用于商业产品中。</p>
+<p>三维人脸采集的设备，比较著名的有美国Artec3D、3dMD、FARO等，国内有北京天远、讯恒图像、技睿新天、杭州先临等。</p>
+<h4 id="基于深度学习的人脸识别相关研究"><a href="#基于深度学习的人脸识别相关研究" class="headerlink" title="基于深度学习的人脸识别相关研究"></a>基于深度学习的人脸识别相关研究</h4><h5 id="【Facebook】DeepFace-Closing-the-Gap-to-Human-Level-Performance-in-Face-Verification"><a href="#【Facebook】DeepFace-Closing-the-Gap-to-Human-Level-Performance-in-Face-Verification" class="headerlink" title="【Facebook】DeepFace: Closing the Gap to Human-Level Performance in Face Verification"></a>【Facebook】<strong>DeepFace: Closing the Gap to Human-Level Performance in Face Verification</strong></h5><blockquote>
+<p>发表于CVPR 2014，深度学习人脸识别的<strong>开山之作</strong>，主要用于<strong>人脸验证</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~ranzato/publications/taigman_cvpr14.pdf">https://www.cs.toronto.edu/~ranzato/publications/taigman_cvpr14.pdf</a></p>
+<p>参考了CSDN上的博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/DL_wly/article/details/92850494">https://blog.csdn.net/DL_wly/article/details/92850494</a></p>
+<p>知乎文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76520981">https://zhuanlan.zhihu.com/p/76520981</a></p>
+</blockquote>
+<p>人脸识别的一般流程为：<strong>检测</strong>——<strong>对齐</strong>——<strong>表示</strong>——<strong>分类</strong></p>
+<p>在<strong>人脸对齐</strong>过程中，DeepFace提出了新的方法：</p>
+<ol>
+<li>用LBP（Local binary patterns, 局部二值模式）+SVR（Support Vector Regression，支持向量回归）的方法检测出人脸的6个基准点，眼镜两个点，鼻子一个点，嘴巴三个点，如下图(a)</li>
+<li>通过拟合一个对基准点的转换（缩放，旋转，平移）对图像进行裁剪，得到下图(b)</li>
+<li>对图像定位67个基准点，并进行三角剖分，得到下图(c)</li>
+<li>用一个3D人脸库USF Human-ID得到一个平均3D人脸模型（正脸），如图(d)</li>
+<li>学习一个3D人脸模型和原2D人脸之间的映射P，并可视化三角块，如图(e)</li>
+<li>通过相关的映射，把原2D人脸中的基准点转换成3D模型产生的基准点，得到如图(f)所示，最后的正脸就是图(g)。</li>
+</ol>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/image-20221105164655832.png" alt="image-20221105164655832" style="zoom:40%;"></p>
+<p>在<strong>人脸表示</strong>过程中，如下图所示，训练了一个DNN来提取人脸图像的特征表示</p>
+<ol>
+<li><p>C1和C3表示卷积层，M2表示最大池化层，“32x11x11x3@142x142”表示使用32个大小为11x11x3的卷积核，输出feature map的大小为142x142。前三层主要提取低水平特征，其中最大池化可以使输出对微小的偏移更加鲁棒（可能人脸对齐歪了一些也没关系），因为最大池化会损失信息所有没有使用太多。</p>
+</li>
+<li><p>L4，L5，L6是局部卷积层，对于feature map上每个位置，学到不同的卷积核（即一张feature map上的卷积核参数不共享），因为人脸的不同区域会有不同的统计特征，比如眼睛和眉毛之间的区域比鼻子和嘴巴之间的区域具有更高的区分能力。局部卷积层会导致更大的参数量，需要很大的数据量才能支撑的起。</p>
+</li>
+<li><p>F7和F8是全连接层，用来捕捉（不同位置的）特征的相关性，比如眼睛的位置和形状，和嘴巴的位置和形状。F7层的输出提取出来作为人脸特征，和LBP特征对比。F8层的特征喂给softmax用于分类</p>
+</li>
+<li><p>对F7层的输出特征进行归一化（除以训练集上所有样本中的最大值），得到的特征向量值都为0到1之间</p>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/image-20221105164728258.png" alt="image-20221105164728258"></p>
+</li>
+</ol>
+<p>后面三层都是使用参数不共享的卷积核，之所以使用参数不共享，有如下原因：</p>
+<ol>
+<li>对齐的人脸图片中，不同的区域会有不同的统计特征，卷积的局部稳定性假设并不存在，所以使用相同的卷积核会导致信息的丢失</li>
+<li>不共享的卷积核并不增加抽取特征时的计算量，而会增加训练时的计算量</li>
+<li>使用不共享的卷积核，需要训练的参数量大大增加，因而需要很大的数据量，然而这个条件本文刚好满足。</li>
+</ol>
+<h5 id="【Google】FaceNet"><a href="#【Google】FaceNet" class="headerlink" title="【Google】FaceNet"></a>【Google】FaceNet</h5><blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1503.03832">https://arxiv.org/abs/1503.03832</a></p>
+<p>参考知乎文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76538002">https://zhuanlan.zhihu.com/p/76538002</a></p>
+</blockquote>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/image-20221106115934478.png" alt="image-20221106115934478" style="zoom: 25%;"></p>
+<p>使用Triplet Loss（三元组损失函数）作为损失函数，基于GoogLeNet或Zeiler＆Fergus模型，直接学习从人脸图像到紧凑的欧几里德空间的映射，提取的嵌入特征。将提取到的特征进行L2 normalize，得到embedding结果（即一张图片使用128维向量表示）。再将得到的embedding结果作为输入，计算triplet loss。</p>
+<p>Triplet Loss的定义如下。Triplet 三元组指的是：anchor, negative, positive 三个部分，每一部分都是一个 embedding 向量。其中anchor指的是基准图片，positive指的是与anchor同一分类下的一张图片，negative指的是与anchor不同分类的一张图片。训练目标：anchor与positive的距离比anchor与negative的距离小（相似度高）</p>
+<p><img src="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/image-20221106120223511-166770734583612.png" alt="image-20221106120223511" style="zoom:33%;"></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>人脸识别门禁系统调研</p><p><a href="http://example.com/2022/11/04/人脸识别门禁系统调研/">http://example.com/2022/11/04/人脸识别门禁系统调研/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Aemilia Xu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-11-04</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-11-06</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/10/26/research-model-extraction/"><span class="level-item">model extraction相关论文汇总（部分）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/valine/1.4.16/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "zbTLXHHTVr7ZTCgT51zCUL5d-9Nh9j0Va",
+            appKey: "YsG6Msj1LDpajrlzeeHjHUdE",
+            
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#二维人脸识别"><span class="level-left"><span class="level-item">二维人脸识别</span></span></a></li><li><a class="level is-mobile" href="#三维人脸识别门禁"><span class="level-left"><span class="level-item">三维人脸识别门禁</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#【优点】"><span class="level-left"><span class="level-item">【优点】</span></span></a></li><li><a class="level is-mobile" href="#【原理】"><span class="level-left"><span class="level-item">【原理】</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#基于深度学习的人脸识别"><span class="level-left"><span class="level-item">基于深度学习的人脸识别</span></span></a></li><li><a class="level is-mobile" href="#人脸防伪"><span class="level-left"><span class="level-item">人脸防伪</span></span></a></li><li><a class="level is-mobile" href="#三维人像的数据采集"><span class="level-left"><span class="level-item">三维人像的数据采集</span></span></a></li></ul></li><li><a class="level is-mobile" href="#基于深度学习的人脸识别相关研究"><span class="level-left"><span class="level-item">基于深度学习的人脸识别相关研究</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#【Facebook】DeepFace-Closing-the-Gap-to-Human-Level-Performance-in-Face-Verification"><span class="level-left"><span class="level-item">【Facebook】DeepFace: Closing the Gap to Human-Level Performance in Face Verification</span></span></a></li><li><a class="level is-mobile" href="#【Google】FaceNet"><span class="level-left"><span class="level-item">【Google】FaceNet</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2022 Aemilia Xu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

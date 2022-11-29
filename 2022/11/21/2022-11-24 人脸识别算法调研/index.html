@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>人脸识别算法调研 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hexo"><meta name="msapplication-TileImage" content="/img/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hexo"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="调研最新的人脸识别算法"><meta property="og:type" content="blog"><meta property="og:title" content="人脸识别算法调研"><meta property="og:url" content="http://example.com/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="调研最新的人脸识别算法"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://example.com/gallery/covers/cover7.jpg"><meta property="article:published_time" content="2022-11-21T06:23:32.000Z"><meta property="article:modified_time" content="2022-11-29T02:48:58.226Z"><meta property="article:author" content="Aemilia Xu"><meta property="article:tag" content="model extraction"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://example.com/gallery/covers/cover7.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/"},"headline":"人脸识别算法调研","image":["http://example.com/gallery/covers/cover7.jpg"],"datePublished":"2022-11-21T06:23:32.000Z","dateModified":"2022-11-29T02:48:58.226Z","author":{"@type":"Person","name":"Aemilia Xu"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"http://example.com/img/logo.svg"}},"description":"调研最新的人脸识别算法"}</script><link rel="canonical" href="http://example.com/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/"><link rel="icon" href="/img/logo.svg"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/cover7.jpg" alt="人脸识别算法调研"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-11-21T06:23:32.000Z" title="2022/11/21 下午2:23:32">2022-11-21</time>发表</span><span class="level-item"><time dateTime="2022-11-29T02:48:58.226Z" title="2022/11/29 上午10:48:58">2022-11-29</time>更新</span><span class="level-item">24 分钟读完 (大约3528个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">人脸识别算法调研</h1><div class="content"><blockquote>
+<p>调研最新的人脸识别算法</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li><strong>Detection</strong> is the ability to detect if there is ‘so   mething’ vs nothing. 即判断存在性</li>
+<li><strong>Recognition</strong> is the ability to recognize what type of thing it is (person, animal, car, etc.). 识别类型。但是facial recognition一般还是指能够通过比较和分析基于人的面部轮廓的模式来独特地识别或验证一个人。</li>
+<li><p><strong>Identification</strong> is the ability to identify a specific individual from other people. 识别具体的个例（人）</p>
+</li>
+<li><p><strong>Authentication</strong>：Facial Authentication（面部认证），即验证一个人是否是他/她声称的那个人</p>
+</li>
+</ul>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221121150851557.png" alt="image-20221121150851557" style="zoom: 33%;"></p>
+<h2 id="人脸识别算法"><a href="#人脸识别算法" class="headerlink" title="人脸识别算法"></a>人脸识别算法</h2><h3 id="经典算法"><a href="#经典算法" class="headerlink" title="经典算法"></a>经典算法</h3><blockquote>
+<p>【知乎网友的总结】<a target="_blank" rel="noopener" href="https://www.zhihu.com/people/mengcius/posts?page=2">https://www.zhihu.com/people/mengcius/posts?page=2</a></p>
+</blockquote>
+<ul>
+<li><p>2014【Facebook】DeepFace: Closing the Gap to Human-Level Performance in Face Verification</p>
+</li>
+<li><p>2014【港中大】Deep Learning Face Representation from Predicting 10,000 Classes</p>
+</li>
+<li><p>2014【港中大】Deep Learning Face Representation by Joint Identification-Verification</p>
+</li>
+<li><p>2014 【港中大】Deeply learned face representations are sparse, selective, and robust</p>
+</li>
+<li><p>2015【Google】FaceNet: A Unified Embedding for Face Recognition and Clustering（Tripled Loss）</p>
+</li>
+<li><p>2015【港中大】DeepID3: Face Recognition with Very Deep Neural Networks</p>
+</li>
+<li><p>2015【牛津】VGG</p>
+</li>
+<li><p>==<strong>2017【佐治亚理工】SphereFace: Deep Hypersphere Embedding for Face Recognition</strong>==</p>
+</li>
+<li><p>==<strong>2018【腾讯】CosFace: Large Margin Cosine Loss for Deep Face Recognition</strong>==</p>
+</li>
+<li><p>==<strong>2018【伦敦帝国理工】ArcFace: Additive Angular Margin Loss for Deep Face Recognition</strong>== <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1801.07698.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://gitcode.net/mirrors/deepinsight/insightface?utm_source=csdn_github_accelerator">code</a></p>
+<p>“目前最为主流的，在学术界达到SOTA，在工业界也广泛使用”。</p>
+<p>使用angular margin based losses：</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122205254686.png" alt="image-20221122205254686"></p>
+<p>其中，$\theta_{j}$是$f_i$和第$j$个类的中心$w_j$之间的角度，<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122205614453.png" alt="image-20221122205614453" style="zoom:33%;">$m$是 additive angular margin，$s$是缩放参数。</p>
+</li>
+</ul>
+<h3 id="上大-amp-京东AI研究院综述"><a href="#上大-amp-京东AI研究院综述" class="headerlink" title="上大&amp;京东AI研究院综述"></a>上大&amp;京东AI研究院综述</h3><blockquote>
+<p>发表于2021年</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2009.13290.pdf">https://arxiv.org/pdf/2009.13290.pdf</a></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122145243559.png" alt="image-20221122145243559"></p>
+</blockquote>
+<p>端到端人脸识别系统的流程，分为<strong>人脸检测(Face Detection)</strong>，<strong>面部对齐(Face Alignment)</strong>，<strong>人脸表示(Face Representation)</strong>，最后就是计算出相似度来判断是否是同一人。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122145319019.png" alt="image-20221122145319019"></p>
+<h4 id="Face-Detection"><a href="#Face-Detection" class="headerlink" title="Face Detection"></a>Face Detection</h4><p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122152022322.png" alt="image-20221122152022322"></p>
+<p>有以下几类：multi-stage, single-stage, anchor-based, anchor-free, multi-task learning, CPU real-time和 problem-oriented methods</p>
+<p>性能的测试如下：</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122152701288.png" alt="image-20221122152701288"></p>
+<h4 id="Face-Representation"><a href="#Face-Representation" class="headerlink" title="Face Representation"></a>Face Representation</h4><p>感觉这些就是比较流行的人脸识别算法</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122145812179.png" alt="image-20221122145812179"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221129104843692.png" alt="image-20221129104843692"></p>
+<h3 id="最新研究"><a href="#最新研究" class="headerlink" title="最新研究"></a>最新研究</h3><blockquote>
+<p>现在比较主流的人脸识别算法有ArcFace、Sphereface、CosFace(Additive Margin Softmax)用基于Margin的softmax损失函数，CurricularFace等是用基于mining的softmax。主流的模型有FaceNet、ImageNet</p>
+</blockquote>
+<p>AAAI 2020</p>
+<ul>
+<li>Mis-classified vector guided softmax loss for face recognition <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1912.00833.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/xiaoboCASIA/SV-X-Softmax/">code</a></li>
+</ul>
+<p><strong><u>CVPR2020</u></strong></p>
+<ul>
+<li><p>==<strong>CurricularFace: adaptive curriculum learning loss for deep face recognition</strong>== <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.00288.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/HuangYG123/CurricularFace">code</a></p>
+<p>提出了Adaptive Curriculum Learning loss (CurricularFace)，在训练的不同阶段给不同困难程度的问题不同的重要性。</p>
+<p>损失函数为：<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124211315247.png" alt="image-20221124211315247" style="zoom:33%;"></p>
+<p>其中，<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124211345790.png" alt="image-20221124211345790" style="zoom:33%;"></p>
+<p>算法如下所示：</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124211409344.png" alt="image-20221124211409344" style="zoom:33%;"></p>
+<p>这个算法对模型也没有提出要求，实验中主要使用ResNet100和ResNet50</p>
+</li>
+</ul>
+<p><u><strong>ICCV 2021</strong></u></p>
+<ul>
+<li><p><strong>SynFace: Face Recognition with Synthetic Data</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2108.07960.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/haibo-qiu/SynFace">code</a></p>
+<p>提出了用合成的人脸图像来进行模型训练的方法。 模型首先使用DiscoFaceGAN组成混合人脸生成器，可以混合两张生成图像。之后，生成的图象与一部分真实图象混合。然后，特征提取器以混合人脸图像作为输入，提取相应的特征。提取的特征要么用于计算模型训练的基于边际的softmax损失(其中W1、W2是两个不同类别的中心权重向量，x是特征向量)，要么作为人脸表示来执行人脸识别和验证任务。</p>
+</li>
+</ul>
+<p><u><strong>NeurIPS 2021</strong></u></p>
+<ul>
+<li><p><strong>Fair SA: Sensitivity Analysis for Fairness in Face Recognition</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2202.03586">pdf</a>、</p>
+<p>以扩展 VPSA 的通用框架的形式提出了一种基于鲁棒性的新公平性评估</p>
+</li>
+</ul>
+<p><u><strong>CVPR 2021</strong></u></p>
+<ul>
+<li><p><strong>When Age-Invariant Face Recognition Meets Face Age Synthesis: A Multi-Task Learning Framework</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.01520.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/Hzzone/MTLFace">code</a></p>
+<p>首先，提出了一个统一的多任务学习框架来联合处理AIFR和FAS，该框架可以学习年龄不变的身份相关表征，同时实现效果好的人脸合成。其次，提出了一种基于注意力的特征分解方法在高级特征maps上分离与年龄相关和身份相关的特征，与之前对特征向量的无约束分解相比，该方法可以约束分解过程。结合年龄估计和人脸识别任务，同时结合连续域自适应来监督分解过程。第三，与之前实现年龄group-level人脸转换的one-hot编码相比，提出了一种新的身份条件模块来实现identity-level人脸转换，并通过权重共享策略提高合成人脸的年龄平滑度。</p>
+</li>
+<li><p>==<strong>MagFace: A Universal Representation for Face Recognition and Quality Assessment</strong>==<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.06627.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/IrvingMeng/MagFace">code</a></p>
+<p>在ArcFace的基础上，提出了MagFace（一种改进的<u>损失函数</u>），它在类间间隔之外，充分利用方向(direction)和模长(magnitude)两个维度的信息来衡量人脸质量问题，有更好的类内分布，也有利于聚类问题。这可以防止模型在嘈杂的低质量样本上过度拟合，并改善野外的人脸识别。是对识别loss进行优化，不需要额外的标注或者网络结构调整，即插即用。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122193830545.png" alt="image-20221122193830545" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122205854361.png" alt="image-20221122205854361" style="zoom: 33%;"></p>
+<p>MagFace对ArcFace的改进就是将additive angular margin $m$替换成了基于特征模长的函数$m(a_i)$，并且加入了一个基于特征模长的惩罚项$\lambda_gg(a_i)$，这是分类损失和归一化损失之间的tradeoff。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122211239454.png" alt="image-20221122211239454" style="zoom: 33%;"></p>
+</li>
+<li><p><strong>WebFace260M: A Benchmark Unveiling the Power of Million-Scale Deep Face Recognition</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.04098.pdf">pdf</a></p>
+<p>一个新的百万级人脸基准</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221122211358685.png" alt="image-20221122211358685" style="zoom: 33%;"></p>
+</li>
+<li><p><strong>ForgeryNet: A Versatile Benchmark for Comprehensive Forgery Analysis</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.05630.pdf">pdf</a></p>
+<p>目前公开最大的深度人脸伪造数据集</p>
+</li>
+<li><p>==<strong>Spherical Confidence Learning for Face Recognition</strong>== <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Li_Spherical_Confidence_Learning_for_Face_Recognition_CVPR_2021_paper.pdf">pdf</a>、<a target="_blank" rel="noopener" href="http://github.com/MathsShen/SCF/">code</a></p>
+<p>19年ICCV，PFE首先将不确定性引入了人脸识别中，假设特征为多元独立高斯分布。但是由于人脸特征归一化破坏了多元独立高斯分布的假设，导致训练不稳定。SCF的改进主要就是更换了分布，从<strong>多元独立高斯分布</strong>变为<strong>超球面上的vMF分布</strong>。提出了在spherical space上进行人脸确定性学习的框架：将<strong>von Mises Fisher密度</strong>扩展到r-半径，并推导了优化目标的闭式解，可解释性更强。</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>CRFace: Confidence Ranker for Model-Agnostic Face Detection Refinement</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.07017.pdf">pdf</a></p>
+<p>【Face Detection】propose a confidence ranking network by taking the bounding box and confidence prediction from a face detector to output new refined confidences.</p>
+</li>
+<li><p><strong>Cross-Domain Similarity Learning for Face Recognition in Unseen Domains</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2103.07503.pdf">pdf</a></p>
+<p>【跨域小样本学习】引入了一种新的跨域度量学习损失：Cross-Domain Triplet (CDT)损失，以提高未知区域的人脸识别</p>
+</li>
+<li><p><strong>Dynamic Class Queue for Large Scale Face Recognition In the Wild</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.11113.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/bilylee/DCQ">code</a></p>
+<p>（注：CSIG FAT-AI 2021 masked face recognition challenge冠军）</p>
+<p>作者提出 dynamic class queue（DCQ）来解决计算资源成本和长尾分类问题。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124102117637.png" alt="image-20221124102117637" style="zoom:33%;"></p>
+</li>
+<li><p><strong>Consistent Instance False Positive Improves Fairness in Face Recognition</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.05519.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/Tencent/TFace">code</a></p>
+<p> 基于softmax损失，提出了一种新的损失函数：<strong>假阳性率惩罚损失</strong>，该损失函数通过提高实例 False Positive Rate（FPR）的一致性来减轻人脸识别的偏差。该方法不需要人口统计学标注，可以减轻由各种属性划分的人口群体之间的偏差，而且这些属性不需要在训练中预定义。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123144757120.png" alt="image-20221123144757120" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123144813526.png" alt="image-20221123144813526" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123144945445.png" alt="image-20221123144945445" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123145011804.png" alt="image-20221123145011804" style="zoom:33%;"></p>
+</li>
+<li><p><strong>Mitigating Face Recognition Bias via Group Adaptive Classifier</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.07576.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/gongsixue/GAC">code</a></p>
+<p>本文设计一个特殊的卷积操作，允许这个卷积操作可以根据输入样本的人种属性进行自适应调整，最终做到为不同的人种设计不同的特征提取计算。把人脸上能提取出来的特征划分成两类：所有人脸巩共有的通用特征，和与人种相关的特有特征。使用各个人种对应的独有模式来提取特征，并且使用通用模式来提升模型泛化性。基于这个思想提出模型group adaptive classifier（GAC）。它包含适应层adaptive layer和自动化模块automation module。适应层中包含适应卷积核和通道注意力两部分。</p>
+<p>首先，使用一个人口统计学属性分类器Demographic Attribute Classifier来获得输入图片的人种标签。然后就是2个模块适应模块adaptation module和自动化模块automation module（先不继续深入研读了）</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123150324073.png" alt="image-20221123150324073" style="zoom:33%;"></p>
+</li>
+<li><p>Variational prototype learning for deep face recognition <a target="_blank" rel="noopener" href="https://web.archive.org/web/20210706151026id_/https://openaccess.thecvf.com/content/CVPR2021/papers/Deng_Variational_Prototype_Learning_for_Deep_Face_Recognition_CVPR_2021_paper.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/deepinsight/insightface/tree/master/recognition/vpl">code</a></p>
+<p>建立memory bank存储历史人脸特征，在计算softmax-based loss时，将历史人脸特征与分类权重加权融合，得到动态可变的分类权重(Variational Prototype)，等于用一个分类层完成了pair-based比对和class-based优化。</p>
+</li>
+</ul>
+<p><u><strong>CVPR 2022</strong></u></p>
+<ul>
+<li><p><strong>DeepFace-EMD: Re-ranking Using Patch-wise Earth Mover’s Distance Improves Out-Of-Distribution Face Identification</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2112.04016.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/anguyen8/deepface-emd">code</a></p>
+</li>
+<li><p><strong>Towards Semi-Supervised Deep Facial Expression Recognition with An Adaptive Confidence Margin</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.12341.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/hangyu94/Ada-CM">code</a> </p>
+<p>【表情识别】</p>
+</li>
+<li><p><strong>An Efficient Training Approach for Very Large Scale Face Recognition</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.10375.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/tiandunx/FFC">code</a></p>
+<p>本文提出的方法在一定层度上缓解大数据量情况下，dataloader和FC层（全连接层）参数量的限制。本文提出的方法为 Faster Face Classification($F^2C$)，运用Dynamic Class Pool（动态类池，DCP）来动态地保存和更新特征，可以将DCP视为FC层的替代。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123161545929.png" alt="image-20221123161545929" style="zoom:33%;"></p>
+</li>
+<li><p>==<strong>AdaFace: Quality Adaptive Margin for Face Recognition</strong>== <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2204.00964.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/mk-minchul/AdaFace">code</a></p>
+<p>提出了一种新的损失函数来通过图像质量强调不同的困难样本的重要性。本文的方法通过用feature norms来近似图像质量，这里是以自适应边缘函数的形式来实现这一点。</p>
+<p>本文提出的损失函数和基于Margin的Softmax损失函数之间的区别如下所示。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123193318250.png" alt="image-20221123193318250"></p>
+<p>图像质量的指标：</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123204530373.png" alt="image-20221123204530373" style="zoom:33%;">，是将图像的feature norm进行了正则化，其中$\mu_z$和$\sigma_z$分别是一个batch中$||z_i||$的平均值和标准差。$\left \lfloor · \right \rceil_{-1}^1$在-1和1之间截断数值，并停止梯度的流动。</p>
+<p>Adaptive Margin Function：<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123205247810.png" alt="image-20221123205247810" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123205308928.png" alt="image-20221123205308928" style="zoom:33%;"></p>
+<p>这个方法对模型的结构其实没有要求，实验中使用的是ResNet50、ResNet100等模型</p>
+</li>
+</ul>
+<p>  p.s.文中这张表还挺好的，基本上总结了现在比较流行的人脸识别算法的损失函数</p>
+<p>  <img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221123163806749.png" alt="image-20221123163806749"></p>
+<ul>
+<li><p><strong>Killing Two Birds with One Stone:Efficient and Robust Training of Face Recognition CNNs by Partial FC</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.15565">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/deepinsight/ insightface/tree/master/recognition">code</a></p>
+<p>提出了PFC(一种FC的变体)，来解决类间冲突和长尾分布问题。该方法在每次迭代中，都会选择正类中心和一个随机的负类中心子集来计算基于margin的softmax损失。在整个训练过程中，所有的类中心仍然保持不变，但在每次迭代中只选择和更新一个子集。因此，计算要求、类间冲突的概率以及对尾部类中心的被动更新频率都大大降低。</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124102529715.png" alt="image-20221124102529715" style="zoom:33%;"></p>
+</li>
+<li><p><strong>Domain Generalization via Shuffled Style Assembly for Face Anti-Spoofing</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.05340.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/wangzhuo2019/SSAN">code</a></p>
+<p>【人脸防伪】  提出了Shuffled Style Assembly Network (SSAN) ，提取并重新组合不同的内容和风格特征，形成一个风格化的特征空间。content information主要记录一些全局语义特征和物理属性。style information保留了一些有利于加强区分活体和欺骗的鉴别性信息。总体结构如下所示：</p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124144842465.png" alt="image-20221124144842465" style="zoom:33%;"></p>
+<p>内容特征的提取：<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124145622012.png" alt="image-20221124145622012" style="zoom:33%;"></p>
+<p>使用梯度反转层(GRL)来优化内容特征生成器和领域判别器(content feature generator and domain discriminator)</p>
+<p>风格特征的提取：</p>
+<p>接着，使用style assembly layers (SAL)来将内容特征和风格特征结合起来。SAL的建立使用AdaIN layers和卷积运算：<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124150252054.png" alt="image-20221124150252054" style="zoom:33%;"></p>
+<p><img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124150621012.png" alt="image-20221124150621012" style="zoom:33%;"></p>
+<p>其中，<img src="/2022/11/21/2022-11-24%20%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%AE%97%E6%B3%95%E8%B0%83%E7%A0%94/image-20221124150746171.png" alt="image-20221124150746171" style="zoom:33%;"></p>
+</li>
+</ul>
+<p><u><strong>ECCV 2020</strong></u></p>
+<ul>
+<li><p><strong>Explainable Face Recognition</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2008.00916.pdf">pdf</a>、<a target="_blank" rel="noopener" href="https://github.com/stresearch/xfr">code</a></p>
+<p>该论文的贡献可以归结为如下三点，分别如下所示</p>
+<ul>
+<li>XFR baseline：作者基于五种网络注意力算法为XFR（人脸识别的可解释性）提供了baseline，并在三个用于人脸识别的公开深度卷积网络上进行了评估：LightCNN、VGGPFACE2和SNET-101。</li>
+<li>图像修复游戏协议和数据集：作者提供标准化评估协议和数据集，用于细粒度的人脸识别可视化。这为客观地比较XFR系统提供了一个量化指标。</li>
+<li>XFR评估：作者首次对图像修复协议的baseline算法进行了全面的评估，从而得出关于这些方法在真实图像上解释的实用性的结论。</li>
+</ul>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>人脸识别算法调研</p><p><a href="http://example.com/2022/11/21/2022-11-24 人脸识别算法调研/">http://example.com/2022/11/21/2022-11-24 人脸识别算法调研/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Aemilia Xu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-11-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-11-29</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/model-extraction/">model extraction</a></div><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/css/share.min.css"><div class="social-share"></div><script src="https://cdnjs.loli.net/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/11/04/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E9%97%A8%E7%A6%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%A0%94/"><span class="level-item">人脸识别门禁系统调研</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/valine/1.4.16/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "zbTLXHHTVr7ZTCgT51zCUL5d-9Nh9j0Va",
+            appKey: "YsG6Msj1LDpajrlzeeHjHUdE",
+            
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#基本概念"><span class="level-left"><span class="level-item">基本概念</span></span></a></li><li><a class="level is-mobile" href="#人脸识别算法"><span class="level-left"><span class="level-item">人脸识别算法</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#经典算法"><span class="level-left"><span class="level-item">经典算法</span></span></a></li><li><a class="level is-mobile" href="#上大-amp-京东AI研究院综述"><span class="level-left"><span class="level-item">上大&amp;京东AI研究院综述</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Face-Detection"><span class="level-left"><span class="level-item">Face Detection</span></span></a></li><li><a class="level is-mobile" href="#Face-Representation"><span class="level-left"><span class="level-item">Face Representation</span></span></a></li></ul></li><li><a class="level is-mobile" href="#最新研究"><span class="level-left"><span class="level-item">最新研究</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2022 Aemilia Xu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
